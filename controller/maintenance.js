@@ -1,4 +1,4 @@
-const user = require('../model/maintence')
+const user = require('../model/maintenances')
 
 
 exports.pageviews = async (req, res) => {

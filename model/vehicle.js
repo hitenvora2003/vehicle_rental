@@ -32,7 +32,9 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please upload image']
     },
-    location: { type: mongoose.Schema.Types.ObjectId, ref: "Location" },
+    location: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Location" },
     createdAt: { type: Date, default: Date.now }
 });
 

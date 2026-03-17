@@ -1,5 +1,5 @@
 const user = require('../model/payment')
-// const { populate } = require('../model/vehicle')
+
 
 
 exports.pageviews = async (req, res) => {

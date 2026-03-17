@@ -12,6 +12,8 @@ var FeedbackRouter = require('./routes/feedback');
 var locationRouter = require('./routes/location');
 var MaintenanceRouter = require('./routes/maintenance');
 var couponRouter = require('./routes/coupon');
+var meinRoutes = require('./routes/meinroutes');
+
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost:27017/vehicle')
@@ -43,6 +45,9 @@ app.use('/feedback', FeedbackRouter)
 app.use('/location', locationRouter)
 app.use('/maintenance', MaintenanceRouter)
 app.use('/coupon', couponRouter)
+app.use('/all-data', meinRoutes)
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

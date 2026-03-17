@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const paymentSchema = new mongoose.Schema({
     booking: { type: mongoose.Schema.Types.ObjectId, ref: "Booking" ,},
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" ,
+    user: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User" ,
         required : [true, 'Please enter user']
     },
     amount: {
