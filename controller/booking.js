@@ -31,7 +31,7 @@ exports.createdata = async (req, res) => {
     // 🔒 Step 1: Check already booked or not
     const alreadyBooked = await user.findOne({
       vehicle: passdata.vehicle,
-      date: passdata.date,
+      Date: passdata.Date,
     })
 
     if (alreadyBooked) {
