@@ -9,16 +9,12 @@ const bookingSchema = new mongoose.Schema({
         required: [true, 'Please enter your vehicle']
 
     },
-    startDate: {
+    Date: {
         type: Date,
-        required: [true, 'Please enter your startDate']
+        required: [true, 'Please enter your Date']
 
     },
-    endDate: {
-        type: Date,
-        required: [true, 'Please enter your endDate']
 
-    },
     totalAmount: {
         type: Number,
         required: [true, 'Please enter totalAmount']

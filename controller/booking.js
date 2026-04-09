@@ -1,5 +1,5 @@
 const user = require('../model/booking')
-const { populate } = require('../model/vehicle')
+
 
 
 exports.pageviews = async (req, res) => {
@@ -22,21 +22,34 @@ exports.pageviews = async (req, res) => {
   }
 }
 
+
+
 exports.createdata = async (req, res) => {
   try {
     let passdata = req.body
-    const data = await user.create(passdata)
-    console.log(data);
-    res.status(200).json({
-      status: 'success',
-      message: 'data create successfull',
-      data: data
+
+    // 🔒 Step 1: Check already booked or not
+    const alreadyBooked = await user.findOne({
+      vehicle: passdata.vehicle,
+      date: passdata.date,
     })
 
-  }
-  catch (error) {
+    if (alreadyBooked) {
+      throw new Error("this slot already reserved")
+    }
+
+    // ✅ Step 2: Create booking
+    const data = await user.create(passdata)
+
+    res.status(200).json({
+      status: "success",
+      message: "booking successful",
+      data
+    })
+
+  } catch (error) {
     res.status(400).json({
-      status: 'fail',
+      status: "failed",
       message: error.message
     })
   }

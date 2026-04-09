@@ -3,7 +3,7 @@ const location = require('../model/location')
 const vehicle = require('../model/vehicle')
 const booking = require('../model/booking')
 const payment = require('../model/payment')
-const maintence = require('../model/maintenances')
+const maintenance = require('../model/maintenances')
 const coupon = require('../model/coupon')
 const feedback = require('../model/feedback')
 
@@ -16,7 +16,7 @@ exports.getalldata = async (req, res) => {
         const types = req.query.type
 
         if (!types) {
-            const [users, locations, vehicles, bookings, payments, maintenances, coupons, feedbacks] = await Promise.all([
+            const [users, locations, vehicles, bookings, payments, maintenances, coupons, feedbacks,totalusers, totallocations, totalvehicles, totalbookings, totalpayments, totalmaintenances, totalcoupons, totalfeedbacks] = await Promise.all([
                 user.find().sort({ crearedAt: -1 }).skip(skip).limit(limit),
                 location.find().sort({ crearedAt: -1 }).skip(skip).limit(limit),
                 vehicle.find().populate('location').sort({ crearedAt: -1 }).skip(skip).limit(limit),
@@ -26,15 +26,27 @@ exports.getalldata = async (req, res) => {
                 payment.find().populate({
                     path : 'booking', populate : [{path : 'user'},{path : 'vehicle',populate :{
                         path :'location'}},{path : 'payment'}]}).populate('user').sort({ crearedAt: -1 }).skip(skip).limit(limit),
-                maintence.find().populate({
+                maintenance.find().populate({
                     path : 'vehicle', populate : {path :'location'}}).sort({ crearedAt: -1 }).skip(skip).limit(limit),
                 coupon.find().sort({ crearedAt: -1 }).skip(skip).limit(limit),
-                feedback.find().populate('user').populate({path: 'vehicle',populate :{path : 'location'}}).sort({ crearedAt: -1 }).skip(skip).limit(limit)
+                feedback.find().populate('user').populate({path: 'vehicle',populate :{path : 'location'}}).sort({ crearedAt: -1 }).skip(skip).limit(limit),
+
+                user.countDocuments(),
+                location.countDocuments(),
+                vehicle.countDocuments(),
+                booking.countDocuments(),
+                payment.countDocuments(),
+                maintenance.countDocuments(),
+                coupon.countDocuments(),
+                feedback.countDocuments(),
+     
             ])
             return res.status(200).json({
                 status: 'success',
-                page, limit,
                 message: 'pagination successfull',
+                page, limit,
+                totalusers, totallocations, totalvehicles, totalbookings, totalpayments, totalmaintenances, totalcoupons, totalfeedbacks,
+         
                 data: { users, locations, vehicles, bookings, payments, maintenances, coupons, feedbacks }
             })
 
